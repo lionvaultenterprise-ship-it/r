@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>120Reset — Fast Relief for Mental Friction</title>
+
+    <!-- HEADLESS INSTANT REDIRECT (PWA INSTALLED OR RETURNING USER ON SAME DEVICE) -->
+    <script>
+        (function() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                                 window.navigator.standalone === true || 
+                                 document.referrer.includes('android-app://');
+
+            const isReturningUser = localStorage.getItem('120reset_returning_user') === 'true' || 
+                                    Boolean(localStorage.getItem('nudge_user_email')) ||
+                                    Boolean(localStorage.getItem('nudge_total_wins'));
+
+            // Redirect users who have downloaded the app or already used this device
+            if (isStandalone || isReturningUser) {
+                document.documentElement.style.display = 'none';
+                const urlParams = new URLSearchParams(window.location.search);
+                const ref = urlParams.get('ref');
+                const promo = urlParams.get('promo');
+                const p = new URLSearchParams();
+                if (ref) p.set('ref', ref);
+                if (promo) p.set('promo', promo);
+                const targetUrl = p.toString() ? `/app.html?${p.toString()}` : '/app.html';
+                window.location.replace(targetUrl);
+            }
+        })();
+    </script>
+
+    <meta name="description" content="120Reset — Fast relief for mental friction. Intercept mindless scrolling and break task paralysis in 120 seconds.">
+    <link rel="canonical" href="https://120reset.vercel.app">
+
+    <!-- Open Graph / WhatsApp / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://120reset.vercel.app">
+    <meta property="og:title" content="120Reset — Fast Relief for Mental Friction">
+    <meta property="og:description" content="Intercept mindless scrolling and bypass execution freeze with 120-second micro-resets.">
+    <meta property="og:image" content="https://120reset.vercel.app/images/hero.png">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://120reset.vercel.app">
+    <meta name="twitter:title" content="120Reset — Fast Relief for Mental Friction">
+    <meta name="twitter:description" content="Fast relief for mental friction, executive dysfunction, and burnout.">
+    <meta name="twitter:image" content="https://120reset.vercel.app/images/hero.png">
+
+    <!-- PWA & Mobile Web App Settings -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="120Reset">
+    <meta name="application-name" content="120Reset">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Web Manifest & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png">
+    <link rel="apple-touch-icon" href="/images/icon-192.png">
+
+    <!-- Schema.org for Search Engine Crawlers -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "120Reset",
+      "operatingSystem": "All",
+      "applicationCategory": "HealthApplication",
+      "description": "Fast relief for mental friction, executive dysfunction, and burnout.",
+      "url": "https://120reset.vercel.app",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "48-Hour Pass",
+          "price": "0.99",
+          "priceCurrency": "USD"
+        },
+        {
+          "@type": "Offer",
+          "name": "Monthly Subscription",
+          "price": "2.99",
+          "priceCurrency": "USD"
+        },
+        {
+          "@type": "Offer",
+          "name": "Lifetime Access",
+          "price": "14.99",
+          "priceCurrency": "USD"
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #000000; 
+            color: #FFFFFF; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .btn-velocity {
+            background-color: #DC2626;
+            color: #FFFFFF;
+            border: 1px solid #EF4444;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-velocity:hover {
+            background-color: #B91C1C;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(220, 38, 38, 0.5);
+        }
+        .btn-velocity:active {
+            transform: translateY(1px);
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+        }
+
+        .card-utility {
+            background: #18181B;
+            border-radius: 24px;
+            border: 1px solid #27272A;
+        }
+        
+        .feature-icon-wrapper {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 28px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .icon-globe-glow {
+            background: radial-gradient(circle at 35% 35%, rgba(6, 182, 212, 0.4) 0%, rgba(14, 165, 233, 0.15) 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.7);
+            box-shadow: 0 0 24px rgba(6, 182, 212, 0.5);
+        }
+
+        .icon-desktop-glow {
+            background: radial-gradient(circle at 35% 35%, rgba(239, 68, 68, 0.4) 0%, rgba(185, 28, 28, 0.15) 100%);
+            border: 1.5px solid rgba(248, 113, 113, 0.7);
+            box-shadow: 0 0 24px rgba(239, 68, 68, 0.5);
+        }
+
+        .icon-phone-glow {
+            background: radial-gradient(circle at 35% 35%, rgba(245, 158, 11, 0.4) 0%, rgba(217, 119, 6, 0.15) 100%);
+            border: 1.5px solid rgba(251, 191, 36, 0.7);
+            box-shadow: 0 0 24px rgba(245, 158, 11, 0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans overflow-x-hidden selection:bg-red-500 selection:text-white">
+
+    <!-- 1. HERO SECTION -->
+    <section class="w-full px-6 pt-20 pb-24 md:pt-32 md:pb-32 max-w-4xl mx-auto flex flex-col items-center text-center">
+        
+        <div class="mb-8 flex justify-center">
+            <span class="inline-block bg-red-600 text-white text-sm md:text-base font-extrabold tracking-widest uppercase px-5 py-2 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.4)]">
+                120Reset
+            </span>
+        </div>
+
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight mb-8 max-w-4xl mx-auto">
+            Fast relief for mental friction
+            <span class="block text-xl md:text-2xl text-zinc-400 font-semibold mt-4 md:mt-6">
+                When your brain hits a wall, take <span class="text-red-500 font-extrabold">120 seconds</span> to clear it.
+            </span>
+        </h1>
+        
+        <div class="relative w-full max-w-xs md:max-w-md mx-auto mb-10 bg-zinc-900 p-2 md:p-3 rounded-[32px] border border-zinc-800">
+            <div class="w-full aspect-[4/5] md:aspect-square overflow-hidden rounded-[24px]">
+                <img src="images/hero.png" alt="App Interface" class="w-full h-full object-cover object-[68%_top] transform scale-[1.15] md:scale-[1.25]">
+            </div>
+        </div>
+
+        <p class="text-xl md:text-2xl font-medium text-zinc-400 mb-10 max-w-2xl mx-auto">
+            That's probably all you need.
+        </p>
+
+        <button onclick="launchApp()" class="btn-velocity w-full md:w-auto text-lg md:text-xl font-bold py-5 px-12 rounded-xl tracking-wide">
+            GET FREE INSTANT ACCESS
+        </button>
+        <p class="text-sm md:text-base text-zinc-400 font-medium mt-4">
+            ⚡ Zero download required • Runs in your browser on desktop &amp; phone
+        </p>
+
+    </section>
+
+    <!-- 2. SECTION 1: THE THREAT -->
+    <section class="w-full px-6 py-20 md:py-28 bg-zinc-950 border-y border-zinc-800">
+        <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
+            
+           <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-8">
+                Stop the energy leak.
+            </h2>
+            
+            <div class="text-xl md:text-2xl font-medium text-zinc-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                <span class="block mb-3">Paralyzed by a looming deadline.</span>
+                <span class="block mb-3">Trapped in a 45-minute social media loop.</span>
+                <span class="block mb-8">Hitting a total mental wall.</span>
+                <span class="font-bold text-red-500 block">Don't rely on willpower.</span>
+            </div>
+            
+            <div class="relative w-full max-w-3xl mx-auto mb-12">
+                <div class="w-full aspect-[4/3] md:aspect-video overflow-hidden rounded-[24px] border border-zinc-800 bg-zinc-900">
+                    <img src="images/Identify%20Friction%20Line.png" alt="Identify your friction line" class="w-full h-full object-cover object-[center_35%] transform scale-[1.35] md:scale-[1.4]">
+                </div>
+            </div>
+
+            <p class="text-2xl md:text-3xl font-bold text-white tracking-tight">Let <span class="text-red-500">120Reset</span> break the mental lock for you.</p>
+
+        </div>
+    </section>
+
+    <!-- 3. SECTION 2 & 3: THE AUTHORITY & THE ENGINE -->
+    <section class="w-full px-6 py-20 md:py-28 max-w-4xl mx-auto flex flex-col gap-20 md:gap-28">
+        
+        <div class="card-utility p-8 md:p-16 flex flex-col items-center text-center">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
+                    All you need is a <span class="text-red-500">Micro-task.</span>
+                </h3>
+                <p class="text-lg md:text-xl font-medium text-zinc-400 max-w-xl mx-auto leading-relaxed">
+                    120Reset distills the best focus mechanics from top behavioral science.
+                </p>
+            </div>
+
+            <div class="relative w-[calc(100%+2rem)] -mx-4 md:w-full md:mx-auto max-w-sm mb-4">
+                <img src="images/Target%20Focus%20Area.png" alt="Micro-task selection" class="w-full h-auto rounded-[24px] md:rounded-[32px] border border-zinc-800">
+            </div>
+        </div>
+
+        <div class="card-utility p-8 md:p-16 flex flex-col items-center text-center">
+            <div class="text-center mb-12 max-w-2xl">
+                <h3 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
+                    No Brainfog. <span class="text-red-500">No overthinking.</span>
+                </h3>
+                
+                <div class="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-lg mx-auto space-y-4 text-left font-medium">
+                    <p><span class="text-white font-bold">Automate custom intercepts</span> to break your mindless scrolling loops.</p>
+                    <p>The app pushes a <span class="text-white font-bold">targeted micro-task</span> to your screen exactly when you are most vulnerable.</p>
+                </div>
+            </div>
+
+            <div class="relative w-[calc(100%+4rem)] -mx-8 md:w-full md:mx-auto max-w-3xl bg-zinc-900 p-1 md:p-3 rounded-2xl md:rounded-[32px] border border-zinc-800 mb-16">
+                <img src="images/Customised%20inputs.png" alt="Customised inputs" class="w-full h-auto rounded-[12px] md:rounded-[24px] object-cover">
+            </div>
+
+            <div class="w-full max-w-2xl text-left border-t border-zinc-800 pt-12">
+                <h4 class="text-2xl md:text-3xl font-bold text-white mb-8 text-center">Done in 3 steps</h4>
+                
+                <div class="flex flex-col gap-4">
+                    <div class="bg-zinc-950 p-6 md:p-8 rounded-2xl border border-zinc-800 flex items-center gap-6">
+                        <span class="text-red-500 font-extrabold text-4xl md:text-5xl leading-none">01</span>
+                        <p class="text-white font-bold text-lg md:text-xl leading-snug">Choose your Remedy stack. Set your intervals.</p>
+                    </div>
+                    <div class="bg-zinc-950 p-6 md:p-8 rounded-2xl border border-zinc-800 flex items-center gap-6">
+                        <span class="text-red-500 font-extrabold text-4xl md:text-5xl leading-none">02</span>
+                        <p class="text-white font-bold text-lg md:text-xl leading-snug">Receive the intercept signal.</p>
+                    </div>
+                    <div class="bg-zinc-950 p-6 md:p-8 rounded-2xl border border-zinc-800 flex items-center gap-6">
+                        <span class="text-red-500 font-extrabold text-4xl md:text-5xl leading-none">03</span>
+                        <p class="text-white font-bold text-lg md:text-xl leading-snug">Read and do.</p>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <p class="inline-block text-red-500 font-extrabold text-xl md:text-2xl tracking-tight border border-red-500/30 bg-red-500/10 px-8 py-4 rounded-full">
+                        Works better than an alarm.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 4. SECTION 4: FIELD LOGS -->
+    <section class="w-full px-6 py-20 md:py-28 bg-zinc-950 border-y border-zinc-800">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">Proven in <span class="text-red-500">high-friction</span> environments.</h2>
+                <p class="text-lg md:text-xl text-zinc-400 font-medium">Unfiltered beta testing logs.</p>
+            </div>
+
+            <div class="flex flex-col gap-6 w-full">
+                <div class="card-utility p-8 md:p-12 flex flex-col gap-4 text-left">
+                    <p class="text-white text-xl md:text-2xl font-bold leading-relaxed">
+                        "I used to doom-scroll until 2 AM. This actually broke my scrolling loop fast."
+                    </p>
+                    <p class="text-zinc-500 text-sm font-bold tracking-widest uppercase">&mdash; Senior Developer</p>
+                </div>
+
+                <div class="card-utility p-8 md:p-12 flex flex-col gap-4 text-left">
+                    <p class="text-white text-xl md:text-2xl font-bold leading-relaxed">
+                        "Some tasks take less than 10 seconds to complete, and the free version is all I need."
+                    </p>
+                    <p class="text-zinc-500 text-sm font-bold tracking-widest uppercase">&mdash; Sales Professional</p>
+                </div>
+
+                <div class="card-utility p-8 md:p-12 flex flex-col gap-4 text-left">
+                    <p class="text-white text-xl md:text-2xl font-bold leading-relaxed">
+                        "I like that it doesn't ask for my personal details to sign up."
+                    </p>
+                    <p class="text-zinc-500 text-sm font-bold tracking-widest uppercase">&mdash; Agency Founder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. INSTANT ACCESS / PWA SECTION -->
+    <section class="w-full px-6 py-20 md:py-28 bg-black">
+        <div class="max-w-5xl mx-auto flex flex-col items-center text-center">
+            <div class="mb-16 max-w-2xl mx-auto">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6">Zero app store bloat.</h2>
+                <p class="text-lg md:text-xl font-medium text-zinc-400 leading-relaxed">Skip the massive downloads. Here is how you access it instantly:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full text-left">
+                <!-- CARD 1: GLOBE -->
+                <div class="flex flex-col gap-5 bg-zinc-900 p-8 rounded-2xl border border-zinc-800">
+                    <div class="feature-icon-wrapper icon-globe-glow">🌐</div>
+                    <h4 class="text-xl md:text-2xl font-bold text-white mb-1">Works instantly in browser</h4>
+                    <p class="text-base font-medium text-zinc-400 leading-relaxed">Access 120Reset immediately from Safari or Chrome. No waiting times or heavy installations required.</p>
+                </div>
+                <!-- CARD 2: DESKTOP & PHONE -->
+                <div class="flex flex-col gap-5 bg-zinc-900 p-8 rounded-2xl border border-zinc-800">
+                    <div class="feature-icon-wrapper icon-desktop-glow">💻</div>
+                    <h4 class="text-xl md:text-2xl font-bold text-white mb-1">Desktop and phone ready</h4>
+                    <p class="text-base font-medium text-zinc-400 leading-relaxed">Keep it pinned in a browser tab while working at your desk, or add it to your phone screen to reset on the go.</p>
+                </div>
+                <!-- CARD 3: MOBILE -->
+                <div class="flex flex-col gap-5 bg-zinc-900 p-8 rounded-2xl border border-zinc-800">
+                    <div class="feature-icon-wrapper icon-phone-glow">📱</div>
+                    <h4 class="text-xl md:text-2xl font-bold text-white mb-1">Install in two taps</h4>
+                    <p class="text-base font-medium text-zinc-400 leading-relaxed">Just tap 'Share' and 'Add to Home Screen'. It sits on your phone and looks exactly like a native app.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FINAL CTA -->
+    <section class="w-full px-6 py-24 md:py-32 text-center max-w-3xl mx-auto border-t border-zinc-800 bg-zinc-950">
+        <button onclick="launchApp()" class="btn-velocity w-full md:w-auto text-lg md:text-xl font-bold py-6 px-14 rounded-xl tracking-wide">
+            GET FREE INSTANT ACCESS
+        </button>
+        <p class="text-lg text-zinc-500 font-medium mt-8 leading-relaxed">Takes 30 seconds to start.<br>No willpower required.</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="w-full py-10 bg-black border-t border-zinc-900 text-center">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-sm text-zinc-600 font-medium">&copy; 2026 120Reset. All&nbsp;rights&nbsp;reserved.</p>
+            <div class="flex gap-8 text-sm text-zinc-600 font-medium">
+                <a href="#" class="hover:text-zinc-400 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-zinc-400 transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- APP LAUNCHER SCRIPT -->
+    <script>
+        function launchApp() {
+            localStorage.setItem('120reset_returning_user', 'true');
+            const urlParams = new URLSearchParams(window.location.search);
+            const promo = urlParams.get('promo');
+            const ref = urlParams.get('ref');
+            const p = new URLSearchParams();
+            if (promo) p.set('promo', promo);
+            if (ref) p.set('ref', ref);
+            const target = p.toString() ? `/app.html?${p.toString()}` : '/app.html';
+            window.location.href = target;
+        }
+    </script>
+</body>
+</html>
